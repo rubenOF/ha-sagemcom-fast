@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import timedelta
+import time
 import logging
 
 import async_timeout
@@ -33,6 +34,7 @@ class SagemcomDataUpdateCoordinator(DataUpdateCoordinator):
         self.data = {}
         self.hosts: dict[str, Device] = {}
         self.client = client
+        self.stats = {}
 
     async def _async_update_data(self) -> dict[str, Device]:
         """Update hosts data."""
@@ -41,6 +43,13 @@ class SagemcomDataUpdateCoordinator(DataUpdateCoordinator):
                 try:
                     await self.client.login()
                     hosts = await self.client.get_hosts(only_active=True)
+
+                    stats = await self.client.get_values_by_xpaths({
+                        "bytes_received": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesReceived",
+                        "bytes_sent": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesSent",
+                    })
+                except Exception as exception:
+                    print(exception)
                 finally:
                     await self.client.logout()
 
@@ -50,6 +59,9 @@ class SagemcomDataUpdateCoordinator(DataUpdateCoordinator):
                     self.hosts[idx] = host
                 for host in hosts:
                     self.hosts[host.id] = host
+
+                stats['last_refresh'] = int(time.time())
+                self.stats = stats
 
                 return self.hosts
         except Exception as exception:

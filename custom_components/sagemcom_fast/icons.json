@@ -1,0 +1,18 @@
+{
+  "entity": {
+    "sensor": {
+      "bytes_received": {
+        "default": "mdi:download-network"
+      },
+      "bytes_sent": {
+        "default": "mdi:upload-network"
+      },
+      "upload": {
+        "default": "mdi:download-network"
+      },
+      "download": {
+        "default": "mdi:upload-network"
+      }
+    }
+  }
+}

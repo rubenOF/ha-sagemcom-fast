@@ -34,5 +34,21 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "bytes_received": {
+        "name": "Download speed"
+      },
+      "bytes_sent": {
+        "name": "Upload speed"
+      },
+      "download": {
+        "name": "Download"
+      },
+      "upload": {
+        "name": "Upload"
+      }
+    }
   }
 }
