@@ -17,9 +17,6 @@ CONF_TRACK_WIRED_CLIENTS: Final = "track_wired_clients"
 DEFAULT_TRACK_WIRELESS_CLIENTS: Final = True
 DEFAULT_TRACK_WIRED_CLIENTS: Final = True
 
-ATTRIBUTION: Final = "Current modem throughput"
-DEFAULT_NAME: Final = "Speed"
-
 ATTR_MANUFACTURER: Final = "Sagemcom"
 
 MIN_SCAN_INTERVAL: Final = 10

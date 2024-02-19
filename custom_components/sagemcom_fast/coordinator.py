@@ -1,9 +1,10 @@
 """Helpers to help coordinate updates."""
+
 from __future__ import annotations
 
 from datetime import timedelta
-import time
 import logging
+import time
 
 import async_timeout
 from homeassistant.core import HomeAssistant
@@ -44,10 +45,12 @@ class SagemcomDataUpdateCoordinator(DataUpdateCoordinator):
                     await self.client.login()
                     hosts = await self.client.get_hosts(only_active=True)
 
-                    stats = await self.client.get_values_by_xpaths({
-                        "bytes_received": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesReceived",
-                        "bytes_sent": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesSent",
-                    })
+                    stats = await self.client.get_values_by_xpaths(
+                        {
+                            "bytes_received": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesReceived",
+                            "bytes_sent": "Device/IP/Interfaces/Interface[Alias='IP_DATA']/Stats/BytesSent",
+                        }
+                    )
                 except Exception as exception:
                     print(exception)
                 finally:
@@ -60,7 +63,7 @@ class SagemcomDataUpdateCoordinator(DataUpdateCoordinator):
                 for host in hosts:
                     self.hosts[host.id] = host
 
-                stats['last_refresh'] = int(time.time())
+                stats["last_refresh"] = int(time.time())
                 self.stats = stats
 
                 return self.hosts
